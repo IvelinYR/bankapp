@@ -1,0 +1,77 @@
+.title {
+    margin-right: 80px;
+}
+.header{
+    background-color: #FF5812;
+    height: 100px;
+}
+.img-logo{
+
+    width: 150px;
+}
+
+
+.active {
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    background: rgb(248,192,56); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(248,192,56,1) 0%, rgba(238,127,45,1) 42%, rgba(225,76,36,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(248,192,56,1) 0%,rgba(238,127,45,1) 42%,rgba(225,76,36,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(248,192,56,1) 0%,rgba(238,127,45,1) 42%,rgba(225,76,36,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8c038', endColorstr='#e14c24',GradientType=0 ); /* IE6-9 */
+    border: 1px solid #B23516;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.active:hover {
+    color: #DCD3CA;
+    box-shadow: 3px 3px 5px #DCD3CA;
+}
+
+.button-back {
+    float: left;
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8c038+0,ee7f2d+42,e14c24+100 */
+    background: rgb(248,192,56); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(248,192,56,1) 0%, rgba(238,127,45,1) 42%, rgba(225,76,36,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(248,192,56,1) 0%,rgba(238,127,45,1) 42%,rgba(225,76,36,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(248,192,56,1) 0%,rgba(238,127,45,1) 42%,rgba(225,76,36,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8c038', endColorstr='#e14c24',GradientType=0 ); /* IE6-9 */
+    border: 1px solid #B23516;
+    text-decoration: none;
+}
+
+.button-back:hover {
+    color: #DCD3CA;
+    box-shadow: 3px 3px 5px #DCD3CA;
+}
+
+.button-login {
+    display: block;
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8c038+0,ee7f2d+42,e14c24+100 */
+    background: rgb(248,192,56); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(248,192,56,1) 0%, rgba(238,127,45,1) 42%, rgba(225,76,36,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(248,192,56,1) 0%,rgba(238,127,45,1) 42%,rgba(225,76,36,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(248,192,56,1) 0%,rgba(238,127,45,1) 42%,rgba(225,76,36,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8c038', endColorstr='#e14c24',GradientType=0 ); /* IE6-9 */
+    border: 1px solid #B23516;
+    text-decoration: none;
+}
+
+.button-login:hover {
+    color: #DCD3CA;
+    box-shadow: 3px 3px 5px #DCD3CA;
+}
+
