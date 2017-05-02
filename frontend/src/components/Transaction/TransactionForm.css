@@ -1,0 +1,38 @@
+.withdrawals{
+    width: 100px;
+    margin: 5px;
+    padding:  5px 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: red;
+    text-decoration: none;
+
+}
+
+.withdrawals:hover {
+    color: black;
+    box-shadow: 3px 3px 5px #DCD3CA;
+}
+
+.deposits{
+    width: 100px;
+    padding:  5px 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: limegreen;
+    text-decoration: none;
+}
+
+.deposits:hover {
+    color: black;
+    box-shadow: 3px 3px 5px #DCD3CA;
+}
+
+h1, h2{
+    color: #DCD3CA;
+}
+input{
+    margin-right: 5px;
+    width: 201px;
+    border-radius: 5px;
+}
