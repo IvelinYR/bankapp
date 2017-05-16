@@ -87,7 +87,7 @@ func (se *MongoSessionStore) InsertAccount(UserID string, a domain.Account) (str
 
 	accountID := randString(7)
 
-	err := session.DB(se.DBName).C("accounts").Insert(&domain.Account{AccountID: accountID, UserID: UserID, Currency: a.Currency, Amount: a.Amount})
+	err := session.DB(se.DBName).C("accounts").Insert(&domain.Account{AccountID: accountID, UserID: UserID, Currency: a.Currency, Amount: a.Amount, Type: a.Type})
 	if err != nil {
 		return "", err
 	}

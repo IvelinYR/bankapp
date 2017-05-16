@@ -22,15 +22,15 @@ func TestUserRequestsHisAccountsAndThereAreNoErrors(t *testing.T) {
 	mockAccountStore := mock_domain.NewMockAccountStore(ctrl)
 
 	account := []domain.Account{}
-	account = append(account, domain.Account{UserID: "12345", AccountID: "54321", Currency: "BGN", Amount: 100})
-	account = append(account, domain.Account{UserID: "54321", AccountID: "12345", Currency: "NGB", Amount: 200})
+	account = append(account, domain.Account{UserID: "12345", AccountID: "54321", Currency: "BGN", Amount: 100, Type: "VISA"})
+	account = append(account, domain.Account{UserID: "54321", AccountID: "12345", Currency: "NGB", Amount: 200, Type: "AMERICAN"})
 
 	mockAccountStore.EXPECT().GetAccounts(gomock.Any()).Return(&account, nil)
 
 	context.Set(r, "session", &domain.Session{})
 	api.GetUserAccounts(mockAccountStore).ServeHTTP(w, r)
 
-	expected := []byte(`[{"AccountID":"54321","UserID":"12345","Currency":"BGN","Amount":100},{"AccountID":"12345","UserID":"54321","Currency":"NGB","Amount":200}]`)
+	expected := []byte(`[{"AccountID":"54321","UserID":"12345","Currency":"BGN","Amount":100,"Type":"VISA"},{"AccountID":"12345","UserID":"54321","Currency":"NGB","Amount":200,"Type":"AMERICAN"}]`)
 
 	if w.Code != http.StatusOK {
 		t.Errorf("wrong status: expected %d, got %d", http.StatusOK, w.Code)

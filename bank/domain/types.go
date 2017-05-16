@@ -129,6 +129,7 @@ type Account struct {
 	UserID    string  `bson:"userid"`
 	Currency  string  `bson:"currency"`
 	Amount    float64 `bson:"amount"`
+	Type      string  `bson:"type"`
 }
 
 type History struct {
