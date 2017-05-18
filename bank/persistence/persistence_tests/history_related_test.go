@@ -1,8 +1,8 @@
-package persistance_test
+package persistence_test
 
 import (
-	"github.com/iliyanmotovski/bankv3/bank/domain"
-	"github.com/iliyanmotovski/bankv3/bank/persistence"
+	"github.com/iliyanmotovski/bankv1/bank/domain"
+	"github.com/iliyanmotovski/bankv1/bank/persistence"
 	"gopkg.in/mgo.v2"
 	"testing"
 	"time"
@@ -15,24 +15,22 @@ func TestItReadsCorrectHistoryDataFromDB(t *testing.T) {
 
 	sessionStore := persistence.NewMongoSessionStore(*session, "bankTest")
 
-	testHistory := domain.History{AccountID: "12345", UserID: "54321", TransactionType: "testT", Currency: "testC", Amount: 10}
+	expected := domain.History{AccountID: "12345", UserID: "54321", TransactionType: "testT", Currency: "testC", Amount: 10}
 
-	err := session.DB("bankTest").C("history").Insert(&domain.History{AccountID: testHistory.AccountID, UserID: testHistory.UserID, TransactionType: testHistory.TransactionType, Currency: testHistory.Currency, Amount: testHistory.Amount})
+	err := session.DB("bankTest").C("history").Insert(&domain.History{AccountID: expected.AccountID, UserID: expected.UserID, TransactionType: expected.TransactionType, Currency: expected.Currency, Amount: expected.Amount})
 	if err != nil {
 		t.Error(err.Error())
 	}
 
-	h, err := sessionStore.GetHistory(testHistory)
+	h, err := sessionStore.GetHistory(expected)
 	if err != nil {
 		t.Error(err.Error())
 	}
 
-	historyFromDB := *h
+	history := *h
 
-	if historyFromDB[0].AccountID != testHistory.AccountID || historyFromDB[0].UserID != testHistory.UserID || historyFromDB[0].TransactionType != testHistory.TransactionType || historyFromDB[0].Currency != testHistory.Currency || historyFromDB[0].Amount != testHistory.Amount {
-		t.Errorf("expected historyFromDB AccountID='%s' UserID='%s' TransactionType='%s' Currency='%s' Amount='%f'\n"+
-			"got '%s' '%s' '%s' '%s' '%f'", testHistory.AccountID, testHistory.UserID, testHistory.TransactionType, testHistory.Currency, testHistory.Amount,
-			historyFromDB[0].AccountID, historyFromDB[0].UserID, historyFromDB[0].TransactionType, historyFromDB[0].Currency, historyFromDB[0].Amount)
+	if history[0] != expected {
+		t.Errorf("expected history: %v got: %v", expected, history[0])
 	}
 
 	sessionStore.Session.DB("bankTest").C("history").RemoveAll(nil)

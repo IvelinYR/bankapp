@@ -1,8 +1,8 @@
-package persistance_test
+package persistence_test
 
 import (
-	"github.com/iliyanmotovski/bankv3/bank/domain"
-	"github.com/iliyanmotovski/bankv3/bank/persistence"
+	"github.com/iliyanmotovski/bankv1/bank/domain"
+	"github.com/iliyanmotovski/bankv1/bank/persistence"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"testing"
@@ -26,26 +26,24 @@ func TestItStartsUpdatesAndDeletesSessionFromDB(t *testing.T) {
 		t.Error(err.Error())
 	}
 
-	UpdatedUserSession := domain.Session{UserID: "54321", SessionID: userSession.SessionID, Expires: updatedInstant}
+	expected := domain.Session{UserID: "54321", SessionID: userSession.SessionID, Expires: updatedInstant}
 
-	sessionStore.UpdateSession(userSession.SessionID, UpdatedUserSession.Expires)
+	sessionStore.UpdateSession(userSession.SessionID, expected.Expires)
 
-	var sessionFromDB domain.Session
-	session.DB("bankTest").C("sessions").Find(bson.M{"userid": testUser.UserID}).One(&sessionFromDB)
+	var result domain.Session
+	session.DB("bankTest").C("sessions").Find(bson.M{"userid": testUser.UserID}).One(&result)
 
-	if UpdatedUserSession.UserID != sessionFromDB.UserID || UpdatedUserSession.SessionID != sessionFromDB.SessionID || UpdatedUserSession.Expires != sessionFromDB.Expires {
-		t.Errorf("expected sessionFromDB UserID'%s' SessionID='%s' Expires='%v'\n"+
-			"got '%s' '%s' '%v'", UpdatedUserSession.UserID, UpdatedUserSession.SessionID, UpdatedUserSession.Expires,
-			sessionFromDB.UserID, sessionFromDB.SessionID, sessionFromDB.Expires)
+	if result != expected {
+		t.Errorf("expected session: %v got: %v", expected, result)
 	}
 
-	sessionFromDB.SessionID = ""
+	result.SessionID = ""
 
 	sessionStore.DeleteSession(userSession.SessionID)
 
-	sessionStore.Session.DB("bankTest").C("sessions").Find(bson.M{"userid": testUser.UserID}).One(&sessionFromDB)
+	sessionStore.Session.DB("bankTest").C("sessions").Find(bson.M{"userid": testUser.UserID}).One(&result)
 
-	if sessionFromDB.SessionID != "" {
+	if result.SessionID != "" {
 		t.Error("expected to have 0 accounts in the DB, but there was more")
 	}
 
