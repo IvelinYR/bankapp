@@ -1,7 +1,7 @@
 package persistence
 
 import (
-	"github.com/iliyanmotovski/bankv3/bank/domain"
+	"github.com/iliyanmotovski/bankv1/bank/domain"
 	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"

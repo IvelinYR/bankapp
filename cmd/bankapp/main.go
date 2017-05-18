@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/iliyanmotovski/bankv3/bank/api"
-	"github.com/iliyanmotovski/bankv3/bank/domain"
-	"github.com/iliyanmotovski/bankv3/bank/persistence"
+	"github.com/iliyanmotovski/bankv1/bank/api"
+	"github.com/iliyanmotovski/bankv1/bank/domain"
+	"github.com/iliyanmotovski/bankv1/bank/persistence"
 	"github.com/justinas/alice"
 	"gopkg.in/mgo.v2"
 	"net/http"
@@ -22,7 +22,7 @@ func main() {
 	session.SetMode(mgo.Monotonic, true)
 
 	r := mux.NewRouter()
-	s := r.PathPrefix("/v3/users").Subrouter()
+	s := r.PathPrefix("/v1/users").Subrouter()
 
 	userSessionDuration := time.Second * 300
 	mongoSessionStore := persistence.NewMongoSessionStore(*session, "bank")
@@ -34,7 +34,7 @@ func main() {
 	SignUpHandlers := alice.New(api.LoggingMiddleware, api.RecoverMiddleware)
 	SecurityHandlers := alice.New(api.LoggingMiddleware, api.RecoverMiddleware, api.CookieBasedSecurity(userSessionStore, userSessionDuration))
 
-	r.Handle("/", http.FileServer(http.Dir("static")))
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 	s.Handle("/signup", SignUpHandlers.Then(api.SignUpHandler(userStore))).Methods("POST")
 	s.Handle("/login", SignUpHandlers.Then(api.LoginHandler(userStore, userSessionStore, userSessionDuration))).Methods("POST")
 	s.Handle("/logout", SignUpHandlers.Then(api.LogoutHandler(userSessionStore))).Methods("POST")

@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/gorilla/context"
-	"github.com/iliyanmotovski/bankv3/bank/domain"
+	"github.com/iliyanmotovski/bankv1/bank/domain"
 	"log"
 	"net/http"
 	"time"

@@ -1,5 +1,4 @@
 *.idea/
 *.iml
 *.txt
-*_mock.go
 *.bank/static/

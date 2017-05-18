@@ -1,8 +1,8 @@
-package persistance_test
+package persistence_test
 
 import (
-	"github.com/iliyanmotovski/bankv3/bank/domain"
-	"github.com/iliyanmotovski/bankv3/bank/persistence"
+	"github.com/iliyanmotovski/bankv1/bank/domain"
+	"github.com/iliyanmotovski/bankv1/bank/persistence"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"testing"
@@ -16,23 +16,23 @@ func TestItWritesCorrectUserDataInDB(t *testing.T) {
 
 	sessionStore := persistence.NewMongoSessionStore(*session, "bankTest")
 
-	testUserRegRequest := domain.UserRegistrationRequest{Username: "testuser", Name: "testname", Email: "testemail", Age: 10}
+	expected := domain.UserRegistrationRequest{Username: "testuser", Name: "testname", Email: "testemail", Age: 10}
 
-	_, err := sessionStore.RegisterUser(testUserRegRequest)
+	_, err := sessionStore.RegisterUser(expected)
 	if err != nil {
 		t.Error(err.Error())
 	}
 
-	var userFromDB domain.User
-	err = session.DB("bankTest").C("users").Find(bson.M{"username": testUserRegRequest.Username}).One(&userFromDB)
+	var user domain.User
+	err = session.DB("bankTest").C("users").Find(bson.M{"username": expected.Username}).One(&user)
 	if err != nil {
 		t.Error(err.Error())
 	}
 
-	if userFromDB.Username != testUserRegRequest.Username || userFromDB.Name != testUserRegRequest.Name || userFromDB.Email != testUserRegRequest.Email || userFromDB.Age != testUserRegRequest.Age {
+	if user.Username != expected.Username || user.Name != expected.Name || user.Email != expected.Email || user.Age != expected.Age {
 		t.Errorf("expected userFromDB Username='%s' Name='%s' Email='%s' Age='%d'\n"+
-			"got '%s' '%s' '%s' '%d'", testUserRegRequest.Username, testUserRegRequest.Name, testUserRegRequest.Email, testUserRegRequest.Age,
-			userFromDB.Username, userFromDB.Name, userFromDB.Email, userFromDB.Age)
+			"got '%s' '%s' '%s' '%d'", expected.Username, expected.Name, expected.Email, expected.Age,
+			user.Username, user.Name, user.Email, user.Age)
 	}
 
 	sessionStore.Session.DB("bankTest").C("users").RemoveAll(nil)
