@@ -6,7 +6,6 @@ import './AccountsList.css'
 export default class Accounts extends Component {
     componentDidMount() {
         this.props.loadAccounts({
-            username: this.props.login.name
         })
     }
 
@@ -18,10 +17,11 @@ export default class Accounts extends Component {
             style = {display: "none"};
         }
 
+
         return (
             <div >
-                <Link to="/home" className="button-back">back</Link>
-                <Link to="/login" className="button-logout">logout</Link>
+                <Link to="/home" className="button-back">Back</Link>
+                <Link to="/login" className="button-logout">Logout</Link>
                 <br/>
                 <div className="table">
                     <Link to="/account" className="active">NewAccount</Link>

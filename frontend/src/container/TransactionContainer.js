@@ -9,7 +9,8 @@ import TransactionForm from '../components/Transaction/TransactionForm'
 const mapStateToProps = (state) => {
     return {
         amount: state.amount,
-        transaction: state.transaction
+        transaction: state.transaction,
+        accounts:state.accounts
     };
 };
 
@@ -18,7 +19,6 @@ const mapDispatchToProps = {
     withdrawal: withdrawal,
     onSubmitTransaction: loadTransactions,
     onSubmitAmount: loadAmount
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionForm);

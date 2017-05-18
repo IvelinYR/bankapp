@@ -5,7 +5,7 @@ export function deposit(data) {
             request: {
                 method: 'post',
                 data: data,
-                url: '/transaction/deposits'
+                url: '/v3/users/me/deposit'
             }
         }
     }
@@ -18,7 +18,7 @@ export function withdrawal(data) {
             request: {
                 method: 'post',
                 data: data,
-                url: '/transaction/withdrawals'
+                url: '/v1/users/me/withdraw'
             }
         }
     }
@@ -31,23 +31,8 @@ export function loadTransactions(data) {
             request: {
                 method:'post',
                 data:data,
-                url: '/history'
+                url: '/v1/users/me/account-history'
             }
         }
     }
 }
-
-export function loadAmount(data) {
-    return {
-        type: 'LOAD_AMOUNT',
-        payload: {
-            request: {
-                method:'post',
-                data:data,
-                url: '/transaction'
-            }
-        }
-    }
-}
-
-

@@ -13,6 +13,7 @@ import App from './App';
 import AccountListContainer from './container/AccountListContainer';
 import CreateAccountContainer from './container/CreateAccountContainer';
 import LoginContainer from './container/LoginContainer';
+import RegisterContainer from './container/RegisterContainer';
 import TransactionContainer from './container/TransactionContainer';
 
 let axios = require('axios');
@@ -32,6 +33,7 @@ ReactDOM.render(
                 <Route path="account" component={CreateAccountContainer}/>
                 <Route path="/transaction/:id" component={TransactionContainer}/>
                 <Route path="login" component={LoginContainer}/>
+                <Route path="register" component={RegisterContainer}/>
             </Route>
         </Router>
     </Provider>,
