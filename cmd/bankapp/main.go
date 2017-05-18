@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/iliyanmotovski/bankv1/bank/api"
-	"github.com/iliyanmotovski/bankv1/bank/domain"
 	"github.com/iliyanmotovski/bankv1/bank/persistence"
 	"github.com/justinas/alice"
 	"gopkg.in/mgo.v2"
@@ -13,7 +12,7 @@ import (
 )
 
 func main() {
-	session, err := mgo.DialWithTimeout("localhost:27016", time.Second*10)
+	session, err := mgo.DialWithTimeout("localhost:27017", time.Second*10)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -21,23 +20,24 @@ func main() {
 	defer session.Close()
 	session.SetMode(mgo.Monotonic, true)
 
+	database := mgo.Database{Session: session, Name: "bank"}
+
+	sessionStore := persistence.NewSessionStore(*database.Session, database.Name)
+	userStore := persistence.NewUserStore(*database.Session, database.Name)
+	accountStore := persistence.NewAccountStore(*database.Session, database.Name)
+
 	r := mux.NewRouter()
 	s := r.PathPrefix("/v1/users").Subrouter()
 
 	userSessionDuration := time.Second * 300
-	mongoSessionStore := persistence.NewMongoSessionStore(*session, "bank")
-
-	userStore := domain.UserStore(mongoSessionStore)
-	userSessionStore := domain.SessionStore(mongoSessionStore)
-	accountStore := domain.AccountStore(mongoSessionStore)
 
 	SignUpHandlers := alice.New(api.LoggingMiddleware, api.RecoverMiddleware)
-	SecurityHandlers := alice.New(api.LoggingMiddleware, api.RecoverMiddleware, api.CookieBasedSecurity(userSessionStore, userSessionDuration))
+	SecurityHandlers := alice.New(api.LoggingMiddleware, api.RecoverMiddleware, api.CookieBasedSecurity(sessionStore, userSessionDuration))
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 	s.Handle("/signup", SignUpHandlers.Then(api.SignUpHandler(userStore))).Methods("POST")
-	s.Handle("/login", SignUpHandlers.Then(api.LoginHandler(userStore, userSessionStore, userSessionDuration))).Methods("POST")
-	s.Handle("/logout", SignUpHandlers.Then(api.LogoutHandler(userSessionStore))).Methods("POST")
+	s.Handle("/login", SignUpHandlers.Then(api.LoginHandler(userStore, sessionStore, userSessionDuration))).Methods("POST")
+	s.Handle("/logout", SignUpHandlers.Then(api.LogoutHandler(sessionStore))).Methods("POST")
 	s.Handle("/me/new-account", SecurityHandlers.Then(api.NewUserAccount(accountStore))).Methods("POST")
 	s.Handle("/me/accounts", SecurityHandlers.Then(api.GetUserAccounts(accountStore))).Methods("GET")
 	s.Handle("/me/delete-account", SecurityHandlers.Then(api.DeleteUserAccount(accountStore))).Methods("DELETE")

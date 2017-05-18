@@ -9,16 +9,27 @@ import (
 	"time"
 )
 
-type MongoSessionStore struct {
+type mongoSessionStore struct {
 	Session mgo.Session
 	DBName  string
 }
 
-func NewMongoSessionStore(session mgo.Session, dbname string) *MongoSessionStore {
-	s := new(MongoSessionStore)
-	s.Session = session
-	s.DBName = dbname
-	return s
+func NewSessionStore(session mgo.Session, dbname string) domain.SessionStore {
+	s := &mongoSessionStore{Session: session, DBName: dbname}
+	sessionStore := domain.SessionStore(s)
+	return sessionStore
+}
+
+func NewUserStore(session mgo.Session, dbname string) domain.UserStore {
+	s := &mongoSessionStore{Session: session, DBName: dbname}
+	userStore := domain.UserStore(s)
+	return userStore
+}
+
+func NewAccountStore(session mgo.Session, dbname string) domain.AccountStore {
+	s := &mongoSessionStore{Session: session, DBName: dbname}
+	accountStore := domain.AccountStore(s)
+	return accountStore
 }
 
 var src = rand.NewSource(time.Now().UnixNano())
@@ -47,7 +58,7 @@ func randString(n int) string {
 	return string(b)
 }
 
-func (se *MongoSessionStore) GetHistory(historyRequest domain.History) (*[]domain.History, error) {
+func (se *mongoSessionStore) GetHistory(historyRequest domain.History) (*[]domain.History, error) {
 	session := se.Session.Clone()
 	defer session.Close()
 
@@ -67,7 +78,7 @@ func (se *MongoSessionStore) GetHistory(historyRequest domain.History) (*[]domai
 	return &result, nil
 }
 
-func (se *MongoSessionStore) GetAccounts(userID string) (*[]domain.Account, error) {
+func (se *mongoSessionStore) GetAccounts(userID string) (*[]domain.Account, error) {
 	session := se.Session.Clone()
 	defer session.Close()
 
@@ -81,7 +92,7 @@ func (se *MongoSessionStore) GetAccounts(userID string) (*[]domain.Account, erro
 	return &result, nil
 }
 
-func (se *MongoSessionStore) InsertAccount(UserID string, a domain.Account) (string, error) {
+func (se *mongoSessionStore) InsertAccount(UserID string, a domain.Account) (string, error) {
 	session := se.Session.Clone()
 	defer session.Close()
 
@@ -100,7 +111,7 @@ func (se *MongoSessionStore) InsertAccount(UserID string, a domain.Account) (str
 	return accountID, nil
 }
 
-func (se *MongoSessionStore) Withdraw(a domain.Account) error {
+func (se *mongoSessionStore) Withdraw(a domain.Account) error {
 	session := se.Session.Clone()
 	defer session.Close()
 
@@ -129,7 +140,7 @@ func (se *MongoSessionStore) Withdraw(a domain.Account) error {
 	return nil
 }
 
-func (se *MongoSessionStore) Deposit(a domain.Account) error {
+func (se *mongoSessionStore) Deposit(a domain.Account) error {
 	session := se.Session.Clone()
 	defer session.Close()
 
@@ -155,7 +166,7 @@ func (se *MongoSessionStore) Deposit(a domain.Account) error {
 	return nil
 }
 
-func (se *MongoSessionStore) DeleteAccount(userID string, accountID string) error {
+func (se *mongoSessionStore) DeleteAccount(userID string, accountID string) error {
 	session := se.Session.Clone()
 	defer session.Close()
 
@@ -179,7 +190,7 @@ func (se *MongoSessionStore) DeleteAccount(userID string, accountID string) erro
 	return nil
 }
 
-func (se *MongoSessionStore) StartSession(u domain.User, userSessionDuration time.Time) (*domain.Session, error) {
+func (se *mongoSessionStore) StartSession(u domain.User, userSessionDuration time.Time) (*domain.Session, error) {
 	session := se.Session.Clone()
 	defer session.Close()
 
@@ -197,7 +208,7 @@ func (se *MongoSessionStore) StartSession(u domain.User, userSessionDuration tim
 	return &result, nil
 }
 
-func (se *MongoSessionStore) FindSessionAvailableAt(sessionID string, instant time.Time) (*domain.Session, bool) {
+func (se *mongoSessionStore) FindSessionAvailableAt(sessionID string, instant time.Time) (*domain.Session, bool) {
 	session := se.Session.Clone()
 	defer session.Close()
 
@@ -212,7 +223,7 @@ func (se *MongoSessionStore) FindSessionAvailableAt(sessionID string, instant ti
 	return &result, false
 }
 
-func (se *MongoSessionStore) DeleteSession(sessionID string) error {
+func (se *mongoSessionStore) DeleteSession(sessionID string) error {
 	session := se.Session.Clone()
 	defer session.Close()
 
@@ -223,7 +234,7 @@ func (se *MongoSessionStore) DeleteSession(sessionID string) error {
 	return nil
 }
 
-func (se *MongoSessionStore) UpdateSession(sessionID string, userSessionDuration time.Time) error {
+func (se *mongoSessionStore) UpdateSession(sessionID string, userSessionDuration time.Time) error {
 	session := se.Session.Clone()
 	defer session.Close()
 
@@ -234,7 +245,7 @@ func (se *MongoSessionStore) UpdateSession(sessionID string, userSessionDuration
 	return nil
 }
 
-func (se *MongoSessionStore) RegisterUser(req domain.UserRegistrationRequest) (*domain.User, error) {
+func (se *mongoSessionStore) RegisterUser(req domain.UserRegistrationRequest) (*domain.User, error) {
 	session := se.Session.Clone()
 	defer session.Close()
 	var err error
@@ -265,7 +276,7 @@ func (se *MongoSessionStore) RegisterUser(req domain.UserRegistrationRequest) (*
 	return &user, nil
 }
 
-func (se *MongoSessionStore) Authenticate(req domain.UserLoginRequest) (*domain.User, error) {
+func (se *mongoSessionStore) Authenticate(req domain.UserLoginRequest) (*domain.User, error) {
 	session := se.Session.Clone()
 	defer session.Close()
 
