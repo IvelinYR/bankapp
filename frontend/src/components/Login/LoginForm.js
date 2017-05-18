@@ -46,14 +46,17 @@ export default class LoginForm extends Component {
 
     onSubmitHandler() {
         this.props.onSubmitLogin({
-            username: this.state.username,
-            password: this.state.password
+            Username: this.state.username,
+            Password: this.state.password
         })
     }
 
     render() {
         return (
             <div>
+                <Link to="/register" className="button-login">Sign in</Link>
+                <br/>
+                <br/>
                 <h1>Login Page</h1>
                 <div className="form-group">
                     <label>Username</label>

@@ -4,7 +4,7 @@ export function login(data) {
         payload: {
             request: {
                 method: 'get',
-                url: '/login',
+                url: '/v1/users/login',
                 data: data
             }
         }

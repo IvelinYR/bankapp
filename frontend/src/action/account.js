@@ -1,10 +1,11 @@
-export function loadAccounts() {
+export function loadAccounts(data) {
     return {
         type: 'LOAD_ACCOUNTS',
         payload: {
             request: {
                 method: 'get',
-                url: '/accounts'
+                data: data,
+                url: '/v1/users/me/accounts'
             }
         }
     }
@@ -16,8 +17,9 @@ export function addAccount(data) {
         payload: {
             request: {
                 method: 'post',
+                // headers: {'Set-Cookie': 'SID='+ getCookie("SID")},
                 data: data,
-                url: '/accounts'
+                url: '/v1/users/me/new-account'
             }
         }
     }

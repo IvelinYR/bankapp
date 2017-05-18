@@ -5,7 +5,8 @@ import AccountList from '../components/AccountList/AccountList'
 const mapStateToProps = (state) => {
     return {
         accounts: state.accounts,
-        amount: state.amount
+        amount: state.amount,
+        login: state.login
     };
 };
 

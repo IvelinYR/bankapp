@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import TransactionItems from './TransactionItems'
-import './Transaction.css'
+import './Transaction.css';
 
 export default class TransactionsList extends Component {
     render() {

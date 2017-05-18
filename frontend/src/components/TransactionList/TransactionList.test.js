@@ -6,7 +6,7 @@ import TransactionItems from './TransactionItems';
 
 describe('Component TransactionsList', () => {
     it('renders as expected', () => {
-        const transaction = [{'type': 'VISA', 'date': '10-10-1011', 'operation': '123'}];
+        const transaction = [{'type': 'VISA', 'date': '10-10-1011', "Amount": '123'}];
         const component = shallow(<TransactionsList transaction={transaction}/>);
         const tree = toJson(component);
         expect(tree).toMatchSnapshot()
@@ -19,7 +19,7 @@ describe('Component TransactionsList', () => {
         expect(component.contains("NO TRANSACTIONS")).toBe(true);
     });
     it('renders single transaction', () => {
-        const transaction = [{'type': 'VISA', 'date': '10-10-1011', 'operation': '123'}];
+        const transaction = [{'type': 'VISA', 'date': '10-10-1011', "Amount": '123'}];
         const component = shallow(<TransactionsList transaction={transaction}/>);
         const tree = toJson(component);
         expect(tree).toMatchSnapshot();
@@ -27,9 +27,9 @@ describe('Component TransactionsList', () => {
     });
     it('renders multiple transactions', () => {
         const transaction = [
-            {'type': 'VISA', 'date': '10-10-1011', 'operation': '123'},
-            {'type': 'VISA', 'date': '20-10-1011', 'operation': '244'},
-            {'type': 'VISA', 'date': '15-10-1011', 'operation': '423'}
+            {'type': 'VISA', 'date': '10-10-1011', "Amount": '123'},
+            {'type': 'VISA', 'date': '20-10-1011', "Amount": '244'},
+            {'type': 'VISA', 'date': '15-10-1011', "Amount": '423'}
         ];
         const component = shallow(<TransactionsList transaction={transaction}/>);
         const tree = toJson(component);
@@ -37,7 +37,7 @@ describe('Component TransactionsList', () => {
         expect(component.find(TransactionItems).length).toBe(3)
     });
     it("should be changed the CSS style of the attribute ", () => {
-        const transaction = [{'type': 'VISA', 'date': '10-10-1011', 'operation': '123'}];
+        const transaction = [{'type': 'VISA', 'date': '10-10-1011', "Amount": '123'}];
         const style = {display: "none"};
         const component = shallow(<TransactionsList transaction={transaction}/>);
         const tree = toJson(component);

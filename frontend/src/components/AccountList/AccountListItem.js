@@ -8,8 +8,8 @@ export default class AccountListItem extends React.Component {
         return (
             <tr>
                 <th><Link to={"/transaction/" + account.id} className='iban'>{account.title}</Link></th>
-                <th className="type">{account.type}</th>
-                <th className="amount">{account.currency + ' ' + account.amount}</th>
+                <th className="type">{account.Type}</th>
+                <th className="amount">{account.Currency + ' ' + account.Total}</th>
             </tr>
         );
     };
@@ -17,10 +17,10 @@ export default class AccountListItem extends React.Component {
 
 AccountListItem.propTypes = {
     account: PropTypes.shape({
-        id: PropTypes.number,
+        id: PropTypes.string,
         title: PropTypes.string,
-        type: PropTypes.string,
-        amount: PropTypes.number,
-        currency: PropTypes.string
+        Type: PropTypes.string,
+        Total: PropTypes.number,
+        Currency: PropTypes.string
     }).isRequired
 };

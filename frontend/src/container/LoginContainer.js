@@ -4,12 +4,13 @@ import LoginForm from '../components/Login/LoginForm';
 
 const mapStateToProps = (state) => {
     return {
-        login: state.login
+        login: state.login,
     };
 };
 
 const mapDispatchToProps = {
     onSubmitLogin: login
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

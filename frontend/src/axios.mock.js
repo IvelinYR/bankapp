@@ -3,54 +3,57 @@ let axios = require('axios');
 export function axiosLoad() {
     const accountList = [];
     const transactionList = [];
-    const users = {username: "ivo", password: "123"};
+    const users = [{Username: "ivo", Password: "123"}];
     let MockAdapter = require('axios-mock-adapter');
     let mock = new MockAdapter(axios);
 
-    mock.onGet('/login').reply(function (config) {
+    mock.onGet('/v1/users/login').reply(function (config) {
         let obj = config.data;
         let profil = JSON.parse(obj);
-        let name = profil.username
-        if (JSON.stringify(profil) === JSON.stringify(users)) {
-            return [200, name]
+        let SID = 'XXSDFSSAAA23423SDDFFSASD3434ASAD';
+        if (JSON.stringify([profil]) === JSON.stringify(users)) {
+            return [200, [SID]]
         } else {
-            const error = "Username or Password was wrong!"
-            return [401, error]
+            return [400, 'ERROR']
         }
     });
 
-    mock.onGet('/accounts').reply(200,
+    mock.onPost('/v1/users/signup').reply(function (config) {
+        let obj = config.data;
+        let NewUser = JSON.parse(obj);
+        users.push(NewUser);
+        if(true) {
+            return [200, name]
+        } else {
+            return [400, 'username does not exist']
+        }
+    });
+
+    mock.onGet('/v1/users/me/accounts').reply(200,
         accountList
     );
 
-    mock.onPost('/accounts').reply(function (config) {
+    mock.onPost('/v1/users/me/new-account').reply(function (config) {
+        console.log(config);
         let obj = config.data;
         let newAccount = JSON.parse(obj)
-        newAccount.id = accountList.length + 1;
+        newAccount.id = accountList.length + 1 + "dsddssdd";
         newAccount.title = "ACCOUNT-" + (accountList.length + 1);
         accountList.push(newAccount);
         return [201, newAccount]
     });
 
-    mock.onPost('/history').reply(function (config) {
+    mock.onPost('/v1/users/me/account-history').reply(function (config) {
         let obj = config.data;
         let newTransaction = JSON.parse(obj);
-        let idNumber = Number(newTransaction.id);
+        let idNumber = newTransaction.id;
         let result = transactionList.filter(function (obj) {
             return obj.id === idNumber;
         });
         return [201, result]
     });
 
-    mock.onPost('/transaction').reply(function (config) {
-        let obj = config.data;
-        let currentId = JSON.parse(obj);
-        let id = currentId.id - 1
-        let account = accountList[id]
-        return [201, account]
-    });
-
-    mock.onPost('/transaction/deposits').reply(function (config) {
+    mock.onPost('/v1/users/me/deposit').reply(function (config) {
         let obj = config.data;
         let newAccount = JSON.parse(obj);
         let newTransaction = JSON.parse(obj);
@@ -67,17 +70,20 @@ export function axiosLoad() {
         if (minutes < 10) {minutes = '0' + minutes}
         if (seconds < 10) {seconds = '0' + seconds}
         today = mm + '/' + dd + '/' + yyyy + ' ' + hour + ':' + minutes + ':' + seconds;
-        transactionList.push(newTransaction);
-        let accountId = newAccount.id - 1;
-        let amount = accountList[accountId].amount;
         newTransaction.date = today;
-        let accountDeposit = newAccount.operation;
-        let result = Number(amount) + Number(accountDeposit);
-        accountList[accountId].amount = result;
-        return [201, accountList[accountId]];
+        transactionList.push(newTransaction);
+        let result = accountList.filter(function (obj) {
+            return obj.id === newTransaction.id;
+        });
+        let account = result[0];
+        let amount = account.Total;
+        let accountDeposit = newAccount.Amount;
+        let sum = Number(amount) + Number(accountDeposit);
+        account.Total = sum;
+        return [201, account];
     });
 
-    mock.onPost('/transaction/withdrawals').reply(function (config) {
+    mock.onPost('/v1/users/me/withdraw').reply(function (config) {
         let obj = config.data;
         let newAccount = JSON.parse(obj);
         let newTransaction = JSON.parse(obj);
@@ -94,13 +100,17 @@ export function axiosLoad() {
         if (minutes < 10) {minutes = '0' + minutes}
         if (seconds < 10) {seconds = '0' + seconds}
         today = mm + '/' + dd + '/' + yyyy + ' ' + hour + ':' + minutes + ':' + seconds;
-        transactionList.push(newTransaction);
-        let accountId = newAccount.id - 1;
-        let amount = accountList[accountId].amount;
         newTransaction.date = today;
-        let accountDeposit = newAccount.operation;
-        let result = Number(amount) - Number(accountDeposit);
-        accountList[accountId].amount = result;
-        return [201, accountList[accountId]];
+        transactionList.push(newTransaction);
+        let result = accountList.filter(function (obj) {
+            return obj.id === newTransaction.id;
+        });
+        let account = result[0];
+        let amount = account.Total;
+        console.log(amount)
+        let accountDeposit = newAccount.Amount;
+        let sum = Number(amount) - Number(accountDeposit);
+        account.Total = sum;
+        return [201, account];
     });
 }

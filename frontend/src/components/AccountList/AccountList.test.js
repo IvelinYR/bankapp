@@ -13,7 +13,7 @@ describe('Component AccountList', () => {
         expect(component.contains("NO ACCOUNTS")).toBe(true)
     });
     it('renders single account', () => {
-        const account = [{'id': '10', 'title': 'ACCOUNT-10', 'type': 'VISA', 'amount': 1000, 'currency': 'BGN'}];
+        const account = [{'id': '10', 'title': 'ACCOUNT-10', 'type': 'VISA', "amount": 1000, 'currency': 'BGN'}];
         const component = shallow(<AccountList accounts={account}/>);
         const tree = toJson(component);
         expect(tree).toMatchSnapshot();
@@ -21,10 +21,10 @@ describe('Component AccountList', () => {
     });
     it('renders multiple accounts', () => {
         const account = [
-            {'id': '10', 'title': 'ACCOUNT-10', 'type': 'VISA', 'amount': '1000', 'currency': 'BGN'},
-            {'id': '11', 'title': 'ACCOUNT-11', 'type': 'VISA', 'amount': '105', 'currency': 'BGN'},
-            {'id': '12', 'title': 'ACCOUNT-12', 'type': 'VISA', 'amount': '102', 'currency': 'BGN'},
-            {'id': '13', 'title': 'ACCOUNT-13', 'type': 'VISA', 'amount': '101', 'currency': 'BGN'}
+            {'id': '10', 'title': 'ACCOUNT-10', 'type': 'VISA', "amount": '1000', 'currency': 'BGN'},
+            {'id': '11', 'title': 'ACCOUNT-11', 'type': 'VISA', "amount": '105', 'currency': 'BGN'},
+            {'id': '12', 'title': 'ACCOUNT-12', 'type': 'VISA', "amount": '102', 'currency': 'BGN'},
+            {'id': '13', 'title': 'ACCOUNT-13', 'type': 'VISA', "amount": '101', 'currency': 'BGN'}
         ];
         const component = shallow(<AccountList accounts={account}/>);
         const tree = toJson(component);
@@ -32,7 +32,7 @@ describe('Component AccountList', () => {
         expect(component.find(AccountListItem).length).toBe(4)
     });
     it("should be changed the style of the attribute ", () => {
-        const account = [{'id': '11', 'title': 'ACCOUNT-11', 'type': 'VISA', 'amount': '10', 'currency': 'BGN'}];
+        const account = [{'id': '11', 'title': 'ACCOUNT-11', 'type': 'VISA', "amount": '10', 'currency': 'BGN'}];
         const style = {display: "none"};
         const component = shallow(<AccountList accounts={account}/>);
         const tree = toJson(component);

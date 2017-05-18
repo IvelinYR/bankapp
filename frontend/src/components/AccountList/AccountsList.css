@@ -1,6 +1,29 @@
 .table{
     float: none;
-    margin: 0 auto;
+    margin: auto;
+}
+.button-logout {
+    float: right;
+    text-align: left;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f8c038+0,ee7f2d+42,e14c24+100 */
+    background: rgb(248,192,56); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(248,192,56,1) 0%, rgba(238,127,45,1) 42%, rgba(225,76,36,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(248,192,56,1) 0%,rgba(238,127,45,1) 42%,rgba(225,76,36,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(248,192,56,1) 0%,rgba(238,127,45,1) 42%,rgba(225,76,36,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8c038', endColorstr='#e14c24',GradientType=0 ); /* IE6-9 */
+    border: 1px solid #B23516;
+    text-decoration: none;
+}
+
+.button-logout:hover {
+    color: #DCD3CA;
+    box-shadow: 3px 3px 5px #DCD3CA;
 }
 
 .table-accounts{
@@ -11,14 +34,14 @@
     box-sizing: border-box;
     padding: 10px;
     border: none;
-    font: normal 38px/normal "Warnes", Helvetica, sans-serif;
+    font: normal 28px/normal "Warnes", Helvetica, sans-serif;
     color: rgba(255,255,255,1);
     text-decoration: normal;
     text-align: center;
     -o-text-overflow: clip;
     text-overflow: clip;
     white-space: pre;
-    text-shadow: 0 0 10px rgba(255,255,255,1) , 0 0 20px rgba(255,255,255,1) , 0 0 30px rgba(255,255,255,1) , 0 0 40px #ff00de , 0 0 70px #ff00de , 0 0 80px #ff00de , 0 0 100px #ff00de ;
+    text-shadow: 0 0 10px rgba(255,255,255,1) , 0 0 20px rgba(255,255,255,1) , 0 0 30px rgba(255,255,255,1) , 0 0 40px yellow , 0 0 70px yellow , 0 0 80px yellow , 0 0 100px grey ;
     -webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
     -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
     -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
@@ -31,7 +54,11 @@
 
 td{
     border-radius: 5px;
-    padding: 0px 15px;
+    padding: 0px 20px;
+}
+
+h2{
+    text-align: center;
 }
 
 th{
