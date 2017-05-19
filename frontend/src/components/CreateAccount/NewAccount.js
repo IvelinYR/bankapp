@@ -28,6 +28,8 @@ export default class NewAccount extends Component {
             Type: this.state.type,
             Total: +0,
             Currency: this.state.currency
+        });
+        this.props.loadAccounts({
         })
     }
 

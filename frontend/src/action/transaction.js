@@ -1,11 +1,12 @@
 export function deposit(data) {
+
     return {
         type: 'DEPOSIT',
         payload: {
             request: {
                 method: 'post',
                 data: data,
-                url: '/v3/users/me/deposit'
+                url: '/v1/users/me/deposit'
             }
         }
     }
@@ -25,6 +26,7 @@ export function withdrawal(data) {
 }
 
 export function loadTransactions(data) {
+    console.log(data);
     return {
         type: 'LOAD_TRANSACTIONS',
         payload: {

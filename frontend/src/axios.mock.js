@@ -37,7 +37,7 @@ export function axiosLoad() {
         console.log(config);
         let obj = config.data;
         let newAccount = JSON.parse(obj)
-        newAccount.id = accountList.length + 1 + "dsddssdd";
+        newAccount.AccountID = accountList.length + 1 + "dsddssdd";
         newAccount.title = "ACCOUNT-" + (accountList.length + 1);
         accountList.push(newAccount);
         return [201, newAccount]
@@ -46,9 +46,9 @@ export function axiosLoad() {
     mock.onPost('/v1/users/me/account-history').reply(function (config) {
         let obj = config.data;
         let newTransaction = JSON.parse(obj);
-        let idNumber = newTransaction.id;
+        let idNumber = newTransaction.AccountID;
         let result = transactionList.filter(function (obj) {
-            return obj.id === idNumber;
+            return obj.AccountID === idNumber;
         });
         return [201, result]
     });
@@ -70,11 +70,12 @@ export function axiosLoad() {
         if (minutes < 10) {minutes = '0' + minutes}
         if (seconds < 10) {seconds = '0' + seconds}
         today = mm + '/' + dd + '/' + yyyy + ' ' + hour + ':' + minutes + ':' + seconds;
-        newTransaction.date = today;
+        newTransaction.Date = today;
         transactionList.push(newTransaction);
         let result = accountList.filter(function (obj) {
-            return obj.id === newTransaction.id;
+            return obj.AccountID === newTransaction.AccountID;
         });
+        console.log(result)
         let account = result[0];
         let amount = account.Total;
         let accountDeposit = newAccount.Amount;
@@ -100,14 +101,13 @@ export function axiosLoad() {
         if (minutes < 10) {minutes = '0' + minutes}
         if (seconds < 10) {seconds = '0' + seconds}
         today = mm + '/' + dd + '/' + yyyy + ' ' + hour + ':' + minutes + ':' + seconds;
-        newTransaction.date = today;
+        newTransaction.Date = today;
         transactionList.push(newTransaction);
         let result = accountList.filter(function (obj) {
-            return obj.id === newTransaction.id;
+            return obj.AccountID === newTransaction.AccountID;
         });
         let account = result[0];
         let amount = account.Total;
-        console.log(amount)
         let accountDeposit = newAccount.Amount;
         let sum = Number(amount) - Number(accountDeposit);
         account.Total = sum;

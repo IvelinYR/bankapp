@@ -19,28 +19,28 @@ export default class TransactionForm extends Component {
 
     handleAddDeposit() {
         this.props.deposit({
-            id: this.props.params.id,
             Amount: Number(this.state.value),
             Currency: this.props.amount.currency,
-            type: "Deposit",
+            AccountID: this.props.params.id,
+            Type: "Deposit",
             date: ""
         });
         this.props.onSubmitTransaction({
-            id: this.props.params.id,
+            AccountID: this.props.params.id,
         });
         this.setState({value: ''});
     }
 
     handleAddWithdrawals() {
         this.props.withdrawal({
-            id:this.props.params.id,
+            AccountID:this.props.params.id,
             Amount: Number(this.state.value),
             Currency: this.props.amount.currency,
-            type: "Withdrawal",
+            Type: "Withdrawal",
             date: ""
         });
         this.props.onSubmitTransaction({
-            id: this.props.params.id,
+            AccountID: this.props.params.id,
         });
 
         this.setState({value: ''})
@@ -48,7 +48,7 @@ export default class TransactionForm extends Component {
 
     componentDidMount() {
         this.props.onSubmitTransaction({
-            id: this.props.params.id,
+            AccountID: this.props.params.id,
         });
     }
 
@@ -57,11 +57,10 @@ export default class TransactionForm extends Component {
     }
 
     render() {
-
-        let id = this.props.params.id;
+        let AccountID = this.props.params.id;
         let accountList = this.props.accounts
         let account = accountList.filter(function (obj) {
-            return obj.id === id;
+            return obj.AccountID === AccountID;
         });
         let currencyAccount = account[0];
         return (
@@ -69,7 +68,6 @@ export default class TransactionForm extends Component {
                 <Link to="/home" className="button-back">Back</Link>
                 <br/>
                 <br/>
-                <h1>{currencyAccount.title}</h1>
                 <h2>{currencyAccount.Currency} {currencyAccount.Total}</h2>
                 <input id="transaction" type="text" value={this.state.value} onChange={this.handleChange}/><br/>
                 <button className="deposits" onClick={this.handleAddDeposit}>Deposit</button>
