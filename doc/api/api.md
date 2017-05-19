@@ -43,7 +43,7 @@ Expect:
 - User to be logged in. Expect nothing in the POST request body.
 
 Response:
-- if successful: 200 OK + JSON Session {"SessionID" string, "UserID" string, "Expires" time}
+- if successful: 200 OK
 
 - else if Already logged out: 400 Bad Request + JSON ErrorResponse {"Message":"Logout Failed", "Resource":"user", "Field":"user_status", "Code":"already_logged_out"}
 
@@ -103,10 +103,10 @@ Response:
 -----------------------------------------------------------------------------------------------------------------------------
 DEPOSIT:
 
-/v1/users/me/deposit - PATCH
+/v1/users/me/deposit - POST
 
 Expect:
-- User to be logged in + JSON {"Currency" string, "Amount" float64}
+- User to be logged in + JSON {"AccountID" string, "Amount" float64}
 
 Response:
 - if authorized and successful: 200 OK + JSON Session
@@ -118,10 +118,10 @@ Response:
 ------------------------------------------------------------------------------------------------------------------------------
 WITHDRAW:
 
-/v1/users/me/withdraw - PATCH
+/v1/users/me/withdraw - POST
 
 Expect:
-- User to be logged in + JSON {"Currency" string, "Amount" float64}
+- User to be logged in + JSON {"AccountID" string, "Amount" float64}
 
 Response:
 - if authorized and successful: 200 OK + JSON Session

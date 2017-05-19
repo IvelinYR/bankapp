@@ -41,8 +41,8 @@ func main() {
 	s.Handle("/me/new-account", SecurityHandlers.Then(api.NewUserAccount(accountStore))).Methods("POST")
 	s.Handle("/me/accounts", SecurityHandlers.Then(api.GetUserAccounts(accountStore))).Methods("GET")
 	s.Handle("/me/delete-account", SecurityHandlers.Then(api.DeleteUserAccount(accountStore))).Methods("DELETE")
-	s.Handle("/me/deposit", SecurityHandlers.Then(api.UserAccountDeposit(accountStore))).Methods("PATCH")
-	s.Handle("/me/withdraw", SecurityHandlers.Then(api.UserAccountWithdraw(accountStore))).Methods("PATCH")
+	s.Handle("/me/deposit", SecurityHandlers.Then(api.UserAccountDeposit(accountStore))).Methods("POST")
+	s.Handle("/me/withdraw", SecurityHandlers.Then(api.UserAccountWithdraw(accountStore))).Methods("POST")
 	s.Handle("/me/account-history", SecurityHandlers.Then(api.UserTransactionHistory(accountStore))).Methods("POST")
 
 	http.ListenAndServe(":8080", r)

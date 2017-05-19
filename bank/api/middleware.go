@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"github.com/gorilla/context"
 	"github.com/iliyanmotovski/bankv1/bank/domain"
 	"log"
@@ -35,9 +36,8 @@ func CookieBasedSecurity(sessionStore domain.SessionStore, userSessionDuration t
 				return
 			}
 
-			//json.NewEncoder(w).Encode(session)
-			*cookie = http.Cookie{Name: "SID", Path: "/", Value: session.SessionID, MaxAge: 300}
-			http.SetCookie(w, cookie)
+			json.NewEncoder(w).Encode(session)
+			w.WriteHeader(http.StatusOK)
 		})
 	}
 }

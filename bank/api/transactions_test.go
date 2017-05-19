@@ -172,7 +172,7 @@ func TestIfThereIsAnErrorWhileInsertingNewAccount(t *testing.T) {
 }
 
 func TestUserDepositsSuccessfully(t *testing.T) {
-	r := httptest.NewRequest("PATCH", "/deposit", nil)
+	r := httptest.NewRequest("POST", "/deposit", nil)
 	w := httptest.NewRecorder()
 
 	ctrl := gomock.NewController(t)
@@ -190,7 +190,7 @@ func TestUserDepositsSuccessfully(t *testing.T) {
 }
 
 func TestIfThereIsAnErrorWhileDepositing(t *testing.T) {
-	r := httptest.NewRequest("PATCH", "/deposit", nil)
+	r := httptest.NewRequest("POST", "/deposit", nil)
 	w := httptest.NewRecorder()
 
 	ctrl := gomock.NewController(t)
@@ -214,7 +214,7 @@ func TestIfThereIsAnErrorWhileDepositing(t *testing.T) {
 }
 
 func TestUserWithdrawsSuccessfully(t *testing.T) {
-	r := httptest.NewRequest("PATCH", "/withdraw", nil)
+	r := httptest.NewRequest("POST", "/withdraw", nil)
 	w := httptest.NewRecorder()
 
 	ctrl := gomock.NewController(t)
@@ -232,7 +232,7 @@ func TestUserWithdrawsSuccessfully(t *testing.T) {
 }
 
 func TestIfUserTriesToWithdrawMoreThanAvailableInTheAccount(t *testing.T) {
-	r := httptest.NewRequest("PATCH", "/withdraw", nil)
+	r := httptest.NewRequest("POST", "/withdraw", nil)
 	w := httptest.NewRecorder()
 
 	ctrl := gomock.NewController(t)
@@ -256,7 +256,7 @@ func TestIfUserTriesToWithdrawMoreThanAvailableInTheAccount(t *testing.T) {
 }
 
 func TestIfThereIsAnErrorWhileWithdrawing(t *testing.T) {
-	r := httptest.NewRequest("PATCH", "/withdraw", nil)
+	r := httptest.NewRequest("POST", "/withdraw", nil)
 	w := httptest.NewRecorder()
 
 	ctrl := gomock.NewController(t)
