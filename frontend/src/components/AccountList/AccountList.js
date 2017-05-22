@@ -4,9 +4,17 @@ import {Link} from 'react-router'
 import './AccountsList.css'
 
 export default class Accounts extends Component {
+    constructor() {
+        super();
+        this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    handleLogout() {
+        this.props.onSubmitLogout({})
+    }
+
     componentDidMount() {
-        this.props.loadAccounts({
-        })
+        this.props.loadAccounts({})
     }
 
     render() {
@@ -19,8 +27,9 @@ export default class Accounts extends Component {
 
         return (
             <div >
-                <Link to="/home" className="button-back">Back</Link>
-                <Link to="/login" className="button-logout">Logout</Link>
+                <Link to="/login">
+                    <button className="button-logout" onClick={this.handleLogout}>Logout</button>
+                </Link>
                 <br/>
                 <div className="table">
                     <Link to="/account" className="active">NewAccount</Link>

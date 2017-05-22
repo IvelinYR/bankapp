@@ -1,5 +1,6 @@
 import {connect} from 'react-redux';
 import {loadAccounts} from '../action/account';
+import {logout} from '../action/login'
 import AccountList from '../components/AccountList/AccountList'
 
 const mapStateToProps = (state) => {
@@ -9,7 +10,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    loadAccounts: loadAccounts
+    onSubmitLogout: logout,
+    loadAccounts: loadAccounts,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountList);

@@ -10,3 +10,15 @@ export function login(data) {
         }
     }
 }
+
+export function logout() {
+    return {
+        type: 'LOGOUT',
+        payload: {
+            request: {
+                method: 'post',
+                url: '/v1/users/logout',
+            }
+        }
+    }
+}

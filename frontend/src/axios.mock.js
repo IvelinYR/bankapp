@@ -7,12 +7,12 @@ export function axiosLoad() {
     let MockAdapter = require('axios-mock-adapter');
     let mock = new MockAdapter(axios);
 
-    mock.onGet('/v1/users/login').reply(function (config) {
+    mock.onPost('/v1/users/login').reply(function (config) {
         let obj = config.data;
         let profil = JSON.parse(obj);
-        let SID = 'XXSDFSSAAA23423SDDFFSASD3434ASAD';
+        let SID = {SessionID : 'XXSDFSSAAA23423SDDFFSASD3434ASAD'};
         if (JSON.stringify([profil]) === JSON.stringify(users)) {
-            return [200, [SID]]
+            return [200, SID]
         } else {
             return [400, 'ERROR']
         }
@@ -29,18 +29,22 @@ export function axiosLoad() {
         }
     });
 
+    mock.onPost('/v1/users/logout').reply(function () {
+      return [201]
+    });
+
     mock.onGet('/v1/users/me/accounts').reply(200,
         accountList
     );
 
     mock.onPost('/v1/users/me/new-account').reply(function (config) {
-        console.log(config);
         let obj = config.data;
         let newAccount = JSON.parse(obj)
         newAccount.AccountID = accountList.length + 1 + "dsddssdd";
         newAccount.title = "ACCOUNT-" + (accountList.length + 1);
         accountList.push(newAccount);
-        return [201, newAccount]
+        let error = {Message:"Create User Account Failed"};
+        return [201, error]
     });
 
     mock.onPost('/v1/users/me/account-history').reply(function (config) {
@@ -75,12 +79,12 @@ export function axiosLoad() {
         let result = accountList.filter(function (obj) {
             return obj.AccountID === newTransaction.AccountID;
         });
-        console.log(result)
         let account = result[0];
-        let amount = account.Total;
+        let amount = account.Amount;
         let accountDeposit = newAccount.Amount;
+        console.log(accountDeposit)
         let sum = Number(amount) + Number(accountDeposit);
-        account.Total = sum;
+        account.Amount = sum;
         return [201, account];
     });
 
@@ -107,10 +111,10 @@ export function axiosLoad() {
             return obj.AccountID === newTransaction.AccountID;
         });
         let account = result[0];
-        let amount = account.Total;
+        let amount = account.Amount;
         let accountDeposit = newAccount.Amount;
         let sum = Number(amount) - Number(accountDeposit);
-        account.Total = sum;
+        account.Amount = sum;
         return [201, account];
     });
 }

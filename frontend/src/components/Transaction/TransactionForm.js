@@ -3,7 +3,6 @@ import './TransactionForm.css';
 import TransactionsList from '../TransactionList/TransactionsList';
 import {Link} from 'react-router';
 
-
 export default class TransactionForm extends Component {
     constructor(props) {
         super(props);
@@ -11,6 +10,7 @@ export default class TransactionForm extends Component {
             account: [],
             transaction: [],
             value: '',
+            validate:''
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleAddDeposit = this.handleAddDeposit.bind(this);
@@ -42,7 +42,6 @@ export default class TransactionForm extends Component {
         this.props.onSubmitTransaction({
             AccountID: this.props.params.id,
         });
-
         this.setState({value: ''})
     }
 
@@ -53,26 +52,33 @@ export default class TransactionForm extends Component {
     }
 
     handleChange(event) {
-        this.setState({value: event.target.value});
+        if(event.target.value <= 0){
+            this.setState({validate:"Must be positive number"})
+        } else {
+            this.setState({value: event.target.value});
+            this.setState({validate:""})
+        }
     }
 
     render() {
         let AccountID = this.props.params.id;
-        let accountList = this.props.accounts
+        let accountList = this.props.accounts;
         let account = accountList.filter(function (obj) {
             return obj.AccountID === AccountID;
         });
         let currencyAccount = account[0];
+        let error = this.props.amount.error;
         return (
             <div>
                 <Link to="/home" className="button-back">Back</Link>
                 <br/>
                 <br/>
-                <h2>{currencyAccount.Currency} {currencyAccount.Total}</h2>
-                <input id="transaction" type="text" value={this.state.value} onChange={this.handleChange}/><br/>
+                <h2>{currencyAccount.Currency} {currencyAccount.Amount}</h2>
+                <input id="transaction" type="number" value={this.state.value} onChange={this.handleChange}/><br/>
                 <button className="deposits" onClick={this.handleAddDeposit}>Deposit</button>
                 <button className="withdrawals" onClick={this.handleAddWithdrawals}>Withdrawals</button>
                 <TransactionsList transaction={this.props.transaction}/>
+                <h2 className="error-info">{error}{this.state.validate}</h2>
             </div>
         )
     }
