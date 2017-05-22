@@ -8,12 +8,12 @@ export default class TransactionItems extends React.Component {
         let style = {color: 'black'};
         let transaction = this.props.transaction;
 
-        if (transaction.Type === "Withdrawal") {
+        if (transaction.TransactionType === "withdraw") {
             prefix = "-";
         }
         return (
             <tr>
-                <th >{transaction.Type}</th>
+                <th >{transaction.TransactionType}</th>
                 <th >{transaction.Date}</th>
                 <th style={style}>{prefix} {transaction.Amount}</th>
             </tr>
@@ -23,7 +23,7 @@ export default class TransactionItems extends React.Component {
 
 TransactionItems.propTypes = {
     transaction:PropTypes.shape({
-        Type: PropTypes.string,
+        TransactionType: PropTypes.string,
         Date: PropTypes.string,
         Amount: PropTypes.number
     }).isRequired

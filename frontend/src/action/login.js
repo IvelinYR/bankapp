@@ -3,7 +3,7 @@ export function login(data) {
         type: 'LOGIN',
         payload: {
             request: {
-                method: 'get',
+                method: 'post',
                 url: '/v1/users/login',
                 data: data
             }

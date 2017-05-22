@@ -29,8 +29,7 @@ export default class NewAccount extends Component {
             Total: +0,
             Currency: this.state.currency
         });
-        this.props.loadAccounts({
-        })
+
     }
 
     render() {

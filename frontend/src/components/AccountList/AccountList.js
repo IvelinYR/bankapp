@@ -11,6 +11,7 @@ export default class Accounts extends Component {
 
     render() {
         const {accounts} = this.props;
+
         let style = {display: "inline-block"};
         if (accounts.length > 0) {
             style = {display: "none"};

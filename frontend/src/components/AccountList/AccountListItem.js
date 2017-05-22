@@ -8,9 +8,9 @@ export default class AccountListItem extends React.Component {
 
         return (
             <tr>
-                <th><Link to={"/transaction/" + account.AccountID} className='iban'>{account.title}</Link></th>
+                <th><Link to={"/transaction/" + account.AccountID} className='iban'>{account.AccountID}</Link></th>
                 <th className="type">{account.Type}</th>
-                <th className="amount">{account.Currency + ' ' + account.Total}</th>
+                <th className="amount">{account.Currency + ' ' + account.Amount}</th>
             </tr>
         );
     };
@@ -21,7 +21,7 @@ AccountListItem.propTypes = {
         AccountID: PropTypes.string,
         title: PropTypes.string,
         Type: PropTypes.string,
-        Total: PropTypes.number,
+        Amount: PropTypes.number,
         Currency: PropTypes.string
     }).isRequired
 };

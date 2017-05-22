@@ -5,7 +5,7 @@ export default function login(state = [], action) {
     switch (action.type) {
         case 'LOGIN_SUCCESS':
             const name = "SID";
-            const value = action.payload.data;
+            const value = action.payload.data.SessionID;
             Cookies.set(name, value);
             return Object.assign({}, state, {
                 name: action.payload.data
