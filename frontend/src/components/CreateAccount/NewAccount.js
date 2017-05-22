@@ -13,6 +13,8 @@ export default class NewAccount extends Component {
         this.handleTypeChange = this.handleTypeChange.bind(this);
         this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
         this.handleAddAccount = this.handleAddAccount.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
+
     }
 
     handleTypeChange(e) {
@@ -26,10 +28,14 @@ export default class NewAccount extends Component {
     handleAddAccount() {
         this.props.onSubmitAccount({
             Type: this.state.type,
-            Total: +0,
+            Amount: +0,
             Currency: this.state.currency
         });
 
+    }
+
+    handleLogout() {
+        this.props.onSubmitLogout({})
     }
 
     render() {
@@ -37,7 +43,9 @@ export default class NewAccount extends Component {
         return (
             <div >
                 <Link to="/home" className="button-back">Back</Link>
-                <Link to="/login" className="button-logout">Logout</Link>
+                <Link to="/login">
+                    <button className="button-logout" onClick={this.handleLogout}>Logout</button>
+                </Link>
                 <div className="table">
                     <h1>New Account</h1>
                     <table>
@@ -72,11 +80,9 @@ export default class NewAccount extends Component {
                         </tr>
                         </tbody>
                     </table>
-                    <Link to={"/home"}>
-                        <button className="btn" onClick={this.handleAddAccount}>Create Accounts</button>
-                    </Link>
-                    <h1>{error}</h1>
+                    <button className="btn" onClick={this.handleAddAccount}>Create Accounts</button>
                 </div>
+                <h2 className="error-info">{error}</h2>
             </div>
         )
     }

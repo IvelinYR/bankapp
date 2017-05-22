@@ -1,5 +1,4 @@
 export function deposit(data) {
-
     return {
         type: 'DEPOSIT',
         payload: {
@@ -26,7 +25,6 @@ export function withdrawal(data) {
 }
 
 export function loadTransactions(data) {
-    console.log(data);
     return {
         type: 'LOAD_TRANSACTIONS',
         payload: {

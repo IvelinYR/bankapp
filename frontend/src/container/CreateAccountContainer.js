@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {addAccount} from '../action/account';
 import {loadAccounts} from '../action/account';
-
+import {logout} from '../action/login'
 
 import NewAccount from '../components/CreateAccount/NewAccount'
 
@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
     onSubmitAccount: addAccount,
+    onSubmitLogout: logout,
     loadAccounts: loadAccounts
 };
 
