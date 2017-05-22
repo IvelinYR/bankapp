@@ -1,7 +1,6 @@
 package api
 
 import (
-	"encoding/json"
 	"github.com/gorilla/context"
 	"github.com/iliyanmotovski/bankv1/bank/domain"
 	"log"
@@ -35,9 +34,6 @@ func CookieBasedSecurity(sessionStore domain.SessionStore, userSessionDuration t
 				errorResponse(w, http.StatusInternalServerError, "Session Update Failed", "error", "unexpected_error", err.Error())
 				return
 			}
-
-			json.NewEncoder(w).Encode(session)
-			w.WriteHeader(http.StatusOK)
 		})
 	}
 }

@@ -75,7 +75,6 @@ func LoginHandler(userStore domain.UserStore, sessionStore domain.SessionStore, 
 		}
 
 		json.NewEncoder(w).Encode(session)
-		w.WriteHeader(http.StatusOK)
 	})
 }
 
@@ -99,7 +98,5 @@ func LogoutHandler(sessionStore domain.SessionStore) http.Handler {
 			errorResponse(w, http.StatusInternalServerError, "Logout Failed", "error", "unexpected_error", err.Error())
 			return
 		}
-
-		w.WriteHeader(http.StatusOK)
 	})
 }
