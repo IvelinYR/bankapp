@@ -4,6 +4,7 @@ import (
 	"github.com/iliyanmotovski/bankv1/bank/domain"
 	"github.com/iliyanmotovski/bankv1/bank/persistence"
 	"github.com/iliyanmotovski/bankv1/bank/persistence/testdb"
+	"reflect"
 	"testing"
 	"time"
 )
@@ -14,8 +15,8 @@ func TestItStartsUpdatesAndDeletesSession(t *testing.T) {
 
 	sessionStore := persistence.NewSessionStore(*db.Database.Session, db.Database.Name)
 
-	startInstant, _ := time.Parse("Jan 2, 2006 at 3:04pm (MST)", "Feb 3, 2013 at 7:54pm (EET)")
-	updatedInstant, _ := time.Parse("Jan 2, 2006 at 3:04pm (MST)", "Feb 13, 2013 at 7:54pm (EET)")
+	startInstant, _ := time.Parse("Jan 2, 2006 at 3:04pm (MST)", "Feb 3, 2013 at 7:54pm (UTC)")
+	updatedInstant, _ := time.Parse("Jan 2, 2006 at 3:04pm (MST)", "Feb 13, 2013 at 7:54pm (UTC)")
 
 	testUser := domain.User{UserID: "54321"}
 
@@ -29,9 +30,10 @@ func TestItStartsUpdatesAndDeletesSession(t *testing.T) {
 	sessionStore.UpdateSession(userSession.SessionID, expected.Expires)
 
 	result, _ := sessionStore.FindSessionAvailableAt(userSession.SessionID, startInstant)
+	result.Expires = result.Expires.UTC()
 
-	if *result != expected {
-		t.Errorf("expected session: %v got: %v", expected, result)
+	if !reflect.DeepEqual(*result, expected) {
+		t.Errorf("expected session: %v got: %v", expected, *result)
 	}
 
 	result.SessionID = ""

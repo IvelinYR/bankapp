@@ -287,7 +287,7 @@ func TestUserIsAuthenticatedAndRequestsHistory(t *testing.T) {
 	defer ctrl.Finish()
 	mockAccountStore := domain.NewMockAccountStore(ctrl)
 
-	instant, _ := time.Parse("Jan 2, 2006 at 3:04pm (MST)", "Feb 3, 2013 at 7:54pm (EET)")
+	instant, _ := time.Parse("Jan 2, 2006 at 3:04pm (MST)", "Feb 3, 2013 at 7:54pm (UTC)")
 	history := []domain.History{}
 	history = append(history, domain.History{UserID: "12345", AccountID: "54321", TransactionType: "deposit", Amount: 100, Date: instant})
 
@@ -296,7 +296,7 @@ func TestUserIsAuthenticatedAndRequestsHistory(t *testing.T) {
 	context.Set(r, "session", &domain.Session{})
 	api.UserTransactionHistory(mockAccountStore).ServeHTTP(w, r)
 
-	expected := []byte(`[{"AccountID":"54321","UserID":"12345","TransactionType":"deposit","Currency":"","Amount":100,"Date":"2013-02-03T19:54:00+02:00"}]`)
+	expected := []byte(`[{"AccountID":"54321","UserID":"12345","TransactionType":"deposit","Currency":"","Amount":100,"Date":"2013-02-03T19:54:00Z"}]`)
 
 	if w.Code != http.StatusOK {
 		t.Errorf("wrong status: expected %d, got %d", http.StatusOK, w.Code)
