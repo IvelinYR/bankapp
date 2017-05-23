@@ -17,6 +17,7 @@
     "react-scripts": "0.9.5",
     "react-test-renderer": "^15.5.4",
     "redux-simple-router": "^2.0.4"
+    
   },
   "dependencies": {
     "babel": "^6.23.0",

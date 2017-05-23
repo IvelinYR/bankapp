@@ -5,7 +5,8 @@ import NewAccount from './NewAccount';
 
 describe('Component NewAccountu', () => {
     it('renders as expected', () => {
-        const component = shallow(<NewAccount/>);
+        const accounts = {error:"Wrong"}
+        const component = shallow(<NewAccount accounts={accounts}/>);
         const tree = toJson(component);
         expect(tree).toMatchSnapshot()
     })
